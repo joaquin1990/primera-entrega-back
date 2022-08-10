@@ -4,15 +4,15 @@
     "products": [
       {
         "id": 1,
-        "quantity": 6
-      },
-      {
-        "id": 2,
         "quantity": 7
       },
       {
+        "id": 2,
+        "quantity": 3
+      },
+      {
         "id": 3,
-        "quantity": 9
+        "quantity": 2
       }
     ],
     "timestamp": 1660128592546

@@ -40,7 +40,7 @@ export default router;
 router.delete("/:cid/products/:pid", async (req, res) => {
   let cid = req.params.cid;
   let pid = req.params.pid;
-  await container.deleteProductInCart(pid, cid);
+  await container.deleteProductInCart(cid, pid);
   res.send({
     status: `The product id:${pid} from the cart id:${cid} was deleted`,
   });

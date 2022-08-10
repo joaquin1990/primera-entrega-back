@@ -74,7 +74,8 @@ class Container {
     findCart["products"] = findCart["products"].filter((product) => {
       return product["id"] != pid;
     });
-    console.log(allCarts);
+    console.log(findCart);
+    // console.log(allCarts);
     await fs.promises.writeFile(path, JSON.stringify(allCarts, null, "\t"));
     return allCarts;
   };
