@@ -1,0 +1,44 @@
+[
+	{
+		"title": "Aromatizante Day",
+		"price": "330",
+		"thumbnail": "Direccion de Day",
+		"id": 1
+	},
+	{
+		"title": "Aromatizante Night",
+		"price": "550",
+		"thumbnail": "Direccion de Aromatizante Night",
+		"id": 2
+	},
+	{
+		"title": "Aromatizante Night",
+		"price": "550",
+		"thumbnail": "Direccion de Aromatizante Night",
+		"id": 3
+	},
+	{
+		"title": "Vela de Pera",
+		"price": "550",
+		"thumbnail": "Direccion de verla de pera",
+		"id": 4
+	},
+	{
+		"title": "Vela de Eucaliptus",
+		"price": "440",
+		"thumbnail": "Direccion de Vela de Eucaliptus",
+		"id": 5
+	},
+	{
+		"title": "Vela de Eucaliptus",
+		"price": "440",
+		"thumbnail": "Direccion de Vela de Jazim",
+		"id": 6
+	},
+	{
+		"title": "Vela Modificada 7",
+		"price": "330",
+		"thumbnail": "Direccion de vela modificada ",
+		"id": 7
+	}
+]
