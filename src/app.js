@@ -5,6 +5,7 @@ import __dirname from "./utils.js";
 
 const app = express();
 const server = app.listen(8080, () => console.log("Now Listening on 8080"));
+const admin = false;
 
 app.use(express.json()); //Middleware para todos porque todos necesitan leer JSON
 app.use(express.urlencoded({ extended: true }));
