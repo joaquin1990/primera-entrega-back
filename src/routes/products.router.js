@@ -1,5 +1,6 @@
 import { Router } from "express";
 import Contenedor from "../managers/productsContainer.js";
+import validateAdmin from "../middlewares/validateAdmin.js";
 
 const router = Router();
 const container = new Contenedor();
@@ -20,7 +21,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //POST '/api/products' - recieves and adds a product
-router.post("/", async (req, res) => {
+router.post("/", validateAdmin, async (req, res) => {
   let product = req.body;
   console.log(req.body);
   res.send({ status: "succes", message: "Product Added" });

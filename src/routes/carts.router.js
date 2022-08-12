@@ -1,9 +1,5 @@
 import { Router } from "express";
-// import Container from "../managers/productsContainer.js";
 import Container from "../managers/cartsContainer.js";
-import fs from "fs";
-import __dirname from "../utils.js";
-const path = __dirname + "/files/carts.json";
 
 const router = Router();
 const container = new Container();
@@ -21,7 +17,7 @@ router.get("/:cid/products", async (req, res) => {
   res.send({ products });
 });
 
-//POST "/api/carts" - recieves and adds a cart
+//POST "/" - recieves and adds a cart
 router.post("/", async (req, res) => {
   let cart = req.body;
   res.send({ status: "succes", message: "Cart Added" });
