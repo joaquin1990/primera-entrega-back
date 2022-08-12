@@ -11,6 +11,13 @@ router.get("/", async (req, res) => {
   res.send(getAllCarts);
 });
 
+// GET "/:cid/products" - returns all products from cart
+router.get("/:cid/products", async (req, res) => {
+  let cid = Number(req.params.cid);
+  let products = await container.getProductsByCid(cid);
+  res.send({ products });
+});
+
 //POST "/api/carts" - recieves and adds a cart
 router.post("/", async (req, res) => {
   let cart = req.body;
@@ -19,15 +26,24 @@ router.post("/", async (req, res) => {
 });
 
 // POST "/:cid/products" - Add products to a specific cart (cid)
-// Falta hacerr!
+// Falta hacerr!!!!
+// Hay que mandarle en el req.body un objeto con el id del producto y la quantity
 router.post("/:cid/products", async (req, res) => {
-  let cid = req.params.cid;
-  let pid = req.params.pid;
-  console.log(cid);
-  console.log(pid);
+  let cid = Number(req.params.cid);
+  let products = await container.getProductsByCid(cid);
+  let findedProduct = products.find(
+    (product) => product.id === Number(req.body.id)
+  );
+  if (findedProduct) {
+    let findedProductQuantity = findedProduct.quantity;
+    findedProductQuantity;
+  }
+
+  console.log(findedProduct);
+  console.log(products);
 });
 
-//DELETE "/api/carts/:cid" - deletes a carts by its id
+//DELETE "/:cid" - deletes a carts by its id
 router.delete("/:cid", async (req, res) => {
   let cid = req.params.cid;
   await container.deleteById(cid);
@@ -36,7 +52,6 @@ router.delete("/:cid", async (req, res) => {
 export default router;
 
 // DELETE "/:cid/products/:pid" - Delete a product by its id in a cart located by its id.
-// ----------- we are here ----------- //
 router.delete("/:cid/products/:pid", async (req, res) => {
   let cid = req.params.cid;
   let pid = req.params.pid;
@@ -44,11 +59,4 @@ router.delete("/:cid/products/:pid", async (req, res) => {
   res.send({
     status: `The product id:${pid} from the cart id:${cid} was deleted`,
   });
-});
-
-// GET "/:cid/products" - returns all products from cart
-router.get("/:cid/products", async (req, res) => {
-  let cid = Number(req.params.cid);
-  let products = await container.getProductsByCid(cid);
-  res.send({ products });
 });

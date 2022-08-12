@@ -6,6 +6,7 @@ const container = new Contenedor();
 
 //GET '/api/products' -> returns all the products
 router.get("/", async (req, res) => {
+  console.log(new Date(Date.now()).toLocaleDateString());
   let getAllProducts = await container.getAll();
   res.send(getAllProducts);
 });
@@ -21,6 +22,7 @@ router.get("/:id", async (req, res) => {
 //POST '/api/products' - recieves and adds a product
 router.post("/", async (req, res) => {
   let product = req.body;
+  console.log(req.body);
   res.send({ status: "succes", message: "Product Added" });
   await container.save(product);
 });

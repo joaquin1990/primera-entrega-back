@@ -4,7 +4,7 @@ import __dirname from "../utils.js";
 const path = __dirname + "/files/carts.json";
 
 class Container {
-  // Get all carts:
+  // GET all carts:
   getAll = async () => {
     try {
       if (fs.existsSync(path)) {
@@ -18,14 +18,15 @@ class Container {
       console.log("Cannot read File : " + error);
     }
   };
-  // Add new cart:
+
+  // POST Add new cart:
   save = async (cart) => {
     try {
       let carts = await this.getAll();
       if (carts.length === 0) {
         cart.id = 1;
         cart.products = [];
-        cart.timestamp = Date.now();
+        cart.timestamp = new Date(Date.now()).toLocaleDateString();
         carts.push(cart);
         await fs.promises.writeFile(path, JSON.stringify(carts, null, "\t"));
         console.log(`El id del cart agregado es el "${cart.id}", carts:`);
@@ -33,7 +34,7 @@ class Container {
       } else {
         cart.id = carts[carts.length - 1].id + 1;
         cart.products = [];
-        cart.timestamp = Date.now();
+        cart.timestamp = new Date(Date.now()).toLocaleDateString();
         carts.push(cart);
         await fs.promises.writeFile(path, JSON.stringify(carts, null, "\t"));
         console.log(`El id del cart agregado es el "${cart.id}", carts:`);
@@ -60,10 +61,6 @@ class Container {
   };
 
   //  DELETE a product by its cid and pid:
-  // First we have to get the cart by its id
-  // Then find the product by its id
-  // Then delete the product (con un filter de todo lo que no sea el pid) and rewrite the FS.
-
   deleteProductInCart = async (cid, pid) => {
     const allCarts = await this.getAll();
     let findCart = allCarts.find((cart) => {
@@ -75,49 +72,50 @@ class Container {
       return product["id"] != pid;
     });
     console.log(findCart);
-    // console.log(allCarts);
     await fs.promises.writeFile(path, JSON.stringify(allCarts, null, "\t"));
     return allCarts;
-  };
-
-  getById = async (number) => {
-    try {
-      const allProducts = await this.getAll();
-      if (allProducts.id != number) {
-        return allProducts.find((element) => element.id == number);
-      } else {
-        console.log("null");
-      }
-    } catch (error) {
-      console.log("Hay un error: " + error);
-    }
   };
 
   deleteById = async (number) => {
     try {
       let carts = await this.getAll();
-      let findItem = carts.find((item) => item.id == number);
-      let newcarts = carts.filter((item) => item.id != number);
-      if (findItem) {
-        await fs.promises.writeFile(path, JSON.stringify(newcarts, null, "\t"));
-        console.log("Se ha eliminado el siguiente item: " + findItem);
+      let findCart = carts.find((cart) => cart.id == number);
+      let newCarts = carts.filter((cart) => cart.id != number);
+      if (findCart) {
+        await fs.promises.writeFile(path, JSON.stringify(newCarts, null, "\t"));
+        console.log("Se ha eliminado el siguiente cart: ");
+        console.log(findCart);
       } else {
         console.log(`El id "${number}" no existe!`);
       }
     } catch (error) {
-      console.log("Cannot delete item: " + error);
+      console.log("Cannot delete cart: " + error);
     }
   };
 
-  deleteAll = async () => {
-    try {
-      let items = await this.getAll();
-      items = [];
-      await fs.promises.writeFile(path, JSON.stringify(items, null, "\t"));
-      console.log("Se han eliminado todos los items");
-    } catch (error) {}
-  };
+  // getById = async (number) => {
+  //   try {
+  //     const allProducts = await this.getAll();
+  //     if (allProducts.id != number) {
+  //       return allProducts.find((element) => element.id == number);
+  //     } else {
+  //       console.log("null");
+  //     }
+  //   } catch (error) {
+  //     console.log("Hay un error: " + error);
+  //   }
+  // };
 
+  // deleteAll = async () => {
+  //   try {
+  //     let items = await this.getAll();
+  //     items = [];
+  //     await fs.promises.writeFile(path, JSON.stringify(items, null, "\t"));
+  //     console.log("Se han eliminado todos los items");
+  //   } catch (error) {}
+  // };
+
+  // POST add products to cart by its id
   update = async (obj, id) => {
     let allProducts = await this.getAll();
     allProducts.map(function (item) {

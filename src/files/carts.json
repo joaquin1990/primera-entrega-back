@@ -1,35 +1,31 @@
 [
-  {
-    "id": 1,
-    "products": [
-      {
-        "id": 1,
-        "quantity": 7
-      },
-      {
-        "id": 2,
-        "quantity": 3
-      },
-      {
-        "id": 3,
-        "quantity": 2
-      }
-    ],
-    "timestamp": 1660128592546
-  },
-  {
-    "id": 2,
-    "products": [],
-    "timestamp": 1660128631143
-  },
-  {
-    "id": 3,
-    "products": [],
-    "timestamp": 1660132136778
-  },
-  {
-    "id": 4,
-    "products": [],
-    "timestamp": 1660132280194
-  }
+	{
+		"id": 1,
+		"products": [
+			{
+				"id": 1,
+				"quantity": 7
+			},
+			{
+				"id": 2,
+				"quantity": 3
+			}
+		],
+		"timestamp": 1660128592546
+	},
+	{
+		"id": 2,
+		"products": [],
+		"timestamp": 1660128631143
+	},
+	{
+		"id": 3,
+		"products": [],
+		"timestamp": 1660132136778
+	},
+	{
+		"id": 4,
+		"products": [],
+		"timestamp": 1660132280194
+	}
 ]

@@ -1,5 +1,6 @@
 import fs from "fs";
 import __dirname from "../utils.js";
+import { v4 as uuid } from "uuid";
 
 const path = __dirname + "/files/items.json";
 class Container {
@@ -17,21 +18,29 @@ class Container {
     }
   };
 
-  save = async (item) => {
+  save = async (product) => {
     try {
       console.log("__dirname: " + __dirname);
-      let items = await this.getAll();
-      if (items.length === 0) {
-        item.id = 1;
-        items.push(item);
-        await fs.promises.writeFile(path, JSON.stringify(items, null, "\t"));
-        console.log(`El id del item agregado es el "${item.id}", items:`);
-        console.log(items);
+      let products = await this.getAll();
+      if (products.length === 0) {
+        product.id = 1;
+        product.date = new Date(Date.now()).toLocaleDateString();
+        product.code = uuid();
+        products.push(product);
+        await fs.promises.writeFile(path, JSON.stringify(products, null, "\t"));
+        console.log(
+          `El id del product agregado es el "${product.id}", products:`
+        );
+        console.log(products);
       } else {
-        item.id = items[items.length - 1].id + 1;
-        items.push(item);
-        await fs.promises.writeFile(path, JSON.stringify(items, null, "\t"));
-        console.log(`El id del item agregado es el "${item.id}", items:`);
+        product.id = products[products.length - 1].id + 1;
+        product.date = new Date(Date.now()).toLocaleDateString();
+        product.code = uuid();
+        products.push(product);
+        await fs.promises.writeFile(path, JSON.stringify(products, null, "\t"));
+        console.log(
+          `El id del product agregado es el "${product.id}", products:`
+        );
       }
     } catch (error) {
       console.log("Cannot write file: " + error);
@@ -78,19 +87,16 @@ class Container {
 
   update = async (obj, id) => {
     let allProducts = await this.getAll();
-    // let id = obj.id; Ya tenemos el id arriba
-    // let title = obj.title;
-    // let price = obj.price;
-    // let thumbnail = obj.thumbnail;
     allProducts.map(function (item) {
       if (item.id == id) {
         item.title = obj.title;
         item.price = obj.price;
         item.thumbnail = obj.thumbnail;
+        item.description = obj.description;
+        item.stock = obj.stock;
       }
     });
     await fs.promises.writeFile(path, JSON.stringify(allProducts, null, "\t"));
-    // console.log(allProducts);
     return allProducts;
   };
 }
