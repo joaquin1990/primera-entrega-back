@@ -1,6 +1,9 @@
 import { Router } from "express";
 // import Container from "../managers/productsContainer.js";
 import Container from "../managers/cartsContainer.js";
+import fs from "fs";
+import __dirname from "../utils.js";
+const path = __dirname + "/files/carts.json";
 
 const router = Router();
 const container = new Container();
@@ -26,21 +29,12 @@ router.post("/", async (req, res) => {
 });
 
 // POST "/:cid/products" - Add products to a specific cart (cid)
-// Falta hacerr!!!!
 // Hay que mandarle en el req.body un objeto con el id del producto y la quantity
 router.post("/:cid/products", async (req, res) => {
-  let cid = Number(req.params.cid);
-  let products = await container.getProductsByCid(cid);
-  let findedProduct = products.find(
-    (product) => product.id === Number(req.body.id)
-  );
-  if (findedProduct) {
-    let findedProductQuantity = findedProduct.quantity;
-    findedProductQuantity;
-  }
-
-  console.log(findedProduct);
-  console.log(products);
+  await container.addProductsToCart(req);
+  res.send({
+    status: `${req.body.quantity} units of the product with id: ${req.body.id} were added to the cart`,
+  });
 });
 
 //DELETE "/:cid" - deletes a carts by its id

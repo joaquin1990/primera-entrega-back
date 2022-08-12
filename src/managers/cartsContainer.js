@@ -128,6 +128,28 @@ class Container {
     await fs.promises.writeFile(path, JSON.stringify(allProducts, null, "\t"));
     return allProducts;
   };
+
+  addProductsToCart = async (req) => {
+    let cid = Number(req.params.cid);
+    let products = await this.getProductsByCid(cid);
+    let carts = await this.getAll();
+    let findedProduct = products.find(
+      (product) => Number(product.id) === Number(req.body.id)
+    );
+    let findedCart = carts.find((cart) => Number(cart.id) == cid);
+    if (findedProduct) {
+      let findedProductQuantity = findedProduct.quantity;
+      findedProduct.quantity = (
+        Number(findedProductQuantity) + Number(req.body.quantity)
+      ).toString();
+      findedCart.products = products;
+      await fs.promises.writeFile(path, JSON.stringify(carts, null, "\t"));
+    } else {
+      findedCart.products.push(req.body);
+
+      await fs.promises.writeFile(path, JSON.stringify(carts, null, "\t"));
+    }
+  };
 }
 
 export default Container;
